@@ -81,7 +81,7 @@ class _tvShowDetailState extends State<tvShowDetail> {
                                   ]),
                               child: ClipRRect(
                                 child: Image.network(
-                                    "https://image.tmdb.org/t/p/w200${parse_data["poster_path"].toString()}",
+                                    "https://image.tmdb.org/t/p/w400${parse_data["poster_path"].toString()}",
                                     fit: BoxFit.fill),
                                 borderRadius: BorderRadius.circular(20),
                               )),
@@ -90,6 +90,9 @@ class _tvShowDetailState extends State<tvShowDetail> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
+                                SizedBox(
+                                  height: 25,
+                                ),
                                 SizedBox(
                                   child: Text(
                                     parse_data["original_name"],
@@ -239,7 +242,9 @@ class _tvShowDetailState extends State<tvShowDetail> {
                           ),
                           Wrap(
                             children: listNetworks.map((entry) {
-                              return imageCard(entry["logo_path"]);
+                              if (entry["logo_path"].toString().isNotEmpty) {
+                                return imageCard(entry["logo_path"]);
+                              }
                             }).toList(),
                           )
                         ],
@@ -262,7 +267,9 @@ class _tvShowDetailState extends State<tvShowDetail> {
                           ),
                           Wrap(
                             children: listCompany.map((entry) {
-                              return imageCard(entry["logo_path"]);
+                              if (entry["logo_path"].toString().isNotEmpty) {
+                                return imageCard(entry["logo_path"]);
+                              }
                             }).toList(),
                           )
                         ],
@@ -285,7 +292,9 @@ class _tvShowDetailState extends State<tvShowDetail> {
                           ),
                           Wrap(
                             children: listSeasons.map((entry) {
-                              return imageCard(entry["poster_path"]);
+                              if (entry["poster_path"].toString().isNotEmpty) {
+                                return imageCard(entry["poster_path"]);
+                              }
                             }).toList(),
                           )
                         ],

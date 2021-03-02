@@ -74,7 +74,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ]),
                               child: ClipRRect(
                                 child: Image.network(
-                                    "https://image.tmdb.org/t/p/w200${parse_data["poster_path"].toString()}",
+                                    "https://image.tmdb.org/t/p/w400${parse_data["poster_path"].toString()}",
                                     fit: BoxFit.fill),
                                 borderRadius: BorderRadius.circular(20),
                               )),
@@ -83,6 +83,9 @@ class _MovieDetailState extends State<MovieDetail> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
+                                SizedBox(
+                                  width: 20,
+                                ),
                                 SizedBox(
                                   child: Text(
                                     parse_data["title"],
