@@ -1,5 +1,3 @@
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dude/components/Movie_card.dart';
 import 'package:flutter_dude/model/api.dart';

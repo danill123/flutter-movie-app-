@@ -13,6 +13,7 @@ class MovieDetail extends StatefulWidget {
 }
 
 class _MovieDetailState extends State<MovieDetail> {
+  List genreList = new List();
   Future fetchDetail() async {
     final responses = await Dio().get(
         "https://api.themoviedb.org/3/movie/${widget.id}?api_key=1240a0327275bc49b56f6907d9be7a90&language=en-US");
@@ -34,6 +35,7 @@ class _MovieDetailState extends State<MovieDetail> {
         // check data
         if (snapshot.hasData) {
           var parse_data = json.decode(snapshot.data.toString());
+          // genreList.addAll(parse_data["genres"]);
 
           return Container(
             decoration: BoxDecoration(color: Colors.white),
@@ -122,11 +124,14 @@ class _MovieDetailState extends State<MovieDetail> {
                   ),
                 ),
                 // header & basic information movie
-                Column(
+                Container(
+                    // margin: EdgeInsets.only(left: 30),
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
                       margin:
-                          const EdgeInsets.only(left: 16, top: 20, right: 16),
+                          const EdgeInsets.only(left: 16, top: 10, right: 16),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -136,34 +141,18 @@ class _MovieDetailState extends State<MovieDetail> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                     decoration: TextDecoration.none)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Family",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Adventure",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Comedy",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Fantasy",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none))
-                              ],
+                            Wrap(
+                              children: genreList.map((entry) {
+                                return Container(
+                                    margin:
+                                        EdgeInsets.only(right: 5, bottom: 5),
+                                    child: Text(entry["name"].toString(),
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.black,
+                                            decoration: TextDecoration.none)));
+                              }).toList(),
                             )
                           ]),
                     ),
@@ -191,168 +180,56 @@ class _MovieDetailState extends State<MovieDetail> {
                       ),
                     )
                   ],
-                )
+                ))
+                // overview & sub movie information
               ],
             )),
           );
         }
-        return Center(child: Text("Check your internet connection"));
+
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          child: Center(
+              child: Text(
+            "Please check your internet connection",
+            style: TextStyle(
+                fontSize: 10,
+                decoration: TextDecoration.none,
+                color: Colors.black87),
+          )),
+          decoration: BoxDecoration(color: Colors.white),
+        );
       },
     );
-    /*
-    print("id " + widget.id.toString());
-    Size size = MediaQuery.of(context).size;
-
-    return Container(
-        decoration: BoxDecoration(color: Colors.white),
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Stack(
-                children: <Widget>[
-                  ClipRRect(
-                    child: Image.asset(
-                      "assets/images/flofa_drop.jpg",
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                      height: size.height * 0.3,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20)),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                          margin: const EdgeInsets.only(left: 10, top: 110),
-                          width: size.height * 0.2,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 1,
-                                  offset: Offset(
-                                      0, 2), // changes position of shadow
-                                ),
-                              ]),
-                          child: ClipRRect(
-                            child: Image.asset("assets/images/flora.jpg",
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(20),
-                          )),
-                      Container(
-                        margin: const EdgeInsets.only(left: 5, top: 175),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Flora & Ulysses",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none),
-                            ),
-                            Text("Rate: 6.7",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none)),
-                            Text("Popularity: 290.226",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none)),
-                            Text("Released",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none))
-                          ],
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            // header & basic information movie
-            Column(
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(left: 16, top: 20, right: 16),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Genre:",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Family",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none)),
-                            Text("Adventure",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none)),
-                            Text("Comedy",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none)),
-                            Text("Fantasy",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none))
-                          ],
-                        )
-                      ]),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 16, top: 20, right: 16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Overview: ",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              decoration: TextDecoration.none)),
-                      SizedBox(height: 10),
-                      Text(
-                          "When Flora rescues a squirrel she names Ulysses, she is amazed to discover he possesses unique superhero powers, which take them on an adventure of humorous complications that ultimately change Flora's life--and her outlook--forever.",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black,
-                              decoration: TextDecoration.none))
-                    ],
-                  ),
-                )
-              ],
-            )
-          ],
-        ));
-        */
   }
 }
+
+/*
+[
+                                Text("Family",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                        decoration: TextDecoration.none)),
+                                Text("Adventure",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                        decoration: TextDecoration.none)),
+                                Text("Comedy",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                        decoration: TextDecoration.none)),
+                                Text("Fantasy",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                        decoration: TextDecoration.none))
+                              ]
+*/
