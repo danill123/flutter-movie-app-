@@ -46,18 +46,3 @@ class _movieAppState extends State<movieApp> {
     );
   }
 }
-
-// class movieApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: true,
-//       initialRoute: 'home',
-//       routes: {
-//         'trending': (context) => trending(),
-//         'home': (context) => HomeS()
-//       },
-//       home: Scaffold(),
-//     );
-//   }
-// }

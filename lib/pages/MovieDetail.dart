@@ -204,32 +204,3 @@ class _MovieDetailState extends State<MovieDetail> {
     );
   }
 }
-
-/*
-[
-                                Text("Family",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Adventure",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Comedy",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Fantasy",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none))
-                              ]
-*/

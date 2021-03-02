@@ -3,13 +3,6 @@ import 'package:flutter/material.dart';
 class img_card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   alignment: Alignment.center,
-    //   child: Text('sadasd'),
-    //   margin: EdgeInsets.all(10),
-    //   decoration: BoxDecoration(
-    //       color: Colors.amber, borderRadius: BorderRadius.circular(15)),
-    // );
     return Container(
         margin: EdgeInsets.all(5),
         // width: size.width * 0.4,

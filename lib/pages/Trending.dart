@@ -55,20 +55,6 @@ class _trendingState extends State<trending> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      /*
-          body: GridView.count(
-            crossAxisCount: 2,
-            children: List.generate(10, (index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MovieDetail()));
-                },
-                child: MovieCard(),
-              );
-            }),
-          )
-        */
       body: viewChecked(),
     );
   }
