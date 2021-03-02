@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dude/pages/Trending.dart';
 import 'package:flutter_dude/pages/home.dart';
 import 'package:flutter_dude/pages/television.dart';
-import 'package:flutter_dude/screens/Home.dart';
 
 class movieApp extends StatefulWidget {
   @override

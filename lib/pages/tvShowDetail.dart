@@ -4,19 +4,23 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MovieDetail extends StatefulWidget {
+class tvShowDetail extends StatefulWidget {
   final int id;
-  const MovieDetail({Key key, this.id}) : super(key: key);
+  const tvShowDetail({Key key, this.id}) : super(key: key);
 
   @override
-  _MovieDetailState createState() => _MovieDetailState();
+  _tvShowDetailState createState() => _tvShowDetailState();
 }
 
-class _MovieDetailState extends State<MovieDetail> {
+class _tvShowDetailState extends State<tvShowDetail> {
+  final List<int> numbers = [1, 2, 3, 5, 8, 13, 21, 34, 55];
   List genreList = new List();
+  List listSeasons = new List();
+  List listNetworks = new List();
+  List listCompany = new List();
   Future fetchDetail() async {
     final responses = await Dio().get(
-        "https://api.themoviedb.org/3/movie/${widget.id}?api_key=1240a0327275bc49b56f6907d9be7a90&language=en-US");
+        "https://api.themoviedb.org/3/tv/${widget.id}?api_key=1240a0327275bc49b56f6907d9be7a90&language=en-US");
     return responses;
   }
 
@@ -36,6 +40,9 @@ class _MovieDetailState extends State<MovieDetail> {
         if (snapshot.hasData) {
           var parse_data = json.decode(snapshot.data.toString());
           genreList.addAll(parse_data["genres"]);
+          listSeasons.addAll(parse_data["seasons"]);
+          listNetworks.addAll(parse_data["networks"]);
+          listCompany.addAll(parse_data["production_companies"]);
 
           return Container(
             decoration: BoxDecoration(color: Colors.white),
@@ -85,7 +92,7 @@ class _MovieDetailState extends State<MovieDetail> {
                               children: <Widget>[
                                 SizedBox(
                                   child: Text(
-                                    parse_data["title"],
+                                    parse_data["original_name"],
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 20,
@@ -95,20 +102,33 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ),
                                   width: 210,
                                 ),
-                                Text(
-                                    "Release Date: ${parse_data["release_date"].toString()}",
+                                SizedBox(
+                                  child: Text(parse_data["tagline"].toString(),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black,
+                                          decoration: TextDecoration.none)),
+                                  width: 210,
+                                ),
+                                Text(parse_data["type"].toString(),
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                         color: Colors.black,
                                         decoration: TextDecoration.none)),
-                                Text(
-                                    "Popularity: ${parse_data["popularity"].toString()}",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
+                                SizedBox(
+                                  child: Text(
+                                      "First Show: ${parse_data["first_air_date"].toString()}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black,
+                                          decoration: TextDecoration.none)),
+                                  width: 215,
+                                ),
                                 Text(parse_data["status"].toString(),
                                     style: TextStyle(
                                         fontSize: 14,
@@ -129,6 +149,29 @@ class _MovieDetailState extends State<MovieDetail> {
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Container(
+                      margin:
+                          const EdgeInsets.only(left: 16, top: 10, right: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              "Number of episode : ${parse_data["number_of_episodes"].toString()}",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text(
+                              "Number of seasons : ${parse_data["number_of_seasons"].toString()}",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none))
+                        ],
+                      ),
+                    ),
                     Container(
                       margin:
                           const EdgeInsets.only(left: 16, top: 10, right: 16),
@@ -178,7 +221,76 @@ class _MovieDetailState extends State<MovieDetail> {
                                   decoration: TextDecoration.none))
                         ],
                       ),
-                    )
+                    ),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                                left: 16, top: 20, right: 16),
+                            child: Text("Networks :",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none)),
+                          ),
+                          Wrap(
+                            children: listNetworks.map((entry) {
+                              return imageCard(entry["logo_path"]);
+                            }).toList(),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                                left: 16, top: 20, right: 16),
+                            child: Text("Company :",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none)),
+                          ),
+                          Wrap(
+                            children: listCompany.map((entry) {
+                              return imageCard(entry["logo_path"]);
+                            }).toList(),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                                left: 16, top: 20, right: 16),
+                            child: Text("Seasons:",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none)),
+                          ),
+                          Wrap(
+                            children: listSeasons.map((entry) {
+                              return imageCard(entry["poster_path"]);
+                            }).toList(),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ))
                 // overview & sub movie information
@@ -205,31 +317,13 @@ class _MovieDetailState extends State<MovieDetail> {
   }
 }
 
-/*
-[
-                                Text("Family",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Adventure",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Comedy",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none)),
-                                Text("Fantasy",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none))
-                              ]
-*/
+Widget imageCard(String imageUrl) {
+  return Container(
+      margin: const EdgeInsets.all(10),
+      width: 100,
+      child: ClipRRect(
+        child: Image.network("https://image.tmdb.org/t/p/w200${imageUrl}",
+            fit: BoxFit.fill),
+        borderRadius: BorderRadius.circular(3),
+      ));
+}

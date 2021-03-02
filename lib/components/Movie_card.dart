@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
 
 // only for grid view list
 class MovieCard extends StatelessWidget {
